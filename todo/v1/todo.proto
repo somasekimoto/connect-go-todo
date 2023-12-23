@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package todo.v1;
+
+option go_package = "github.com/somasekimoto/connect-go-todo/gen/todo/v1;todov1";
+
+message TodoItem {
+    uint64 id = 1;
+    string name = 2;
+    bool completed = 3;
+  }
+  
+message TodoItems {
+    repeated TodoItem item = 1;
+}
+
+message CreateTodoRequest {
+    string name = 1;
+}
+
+message CreateTodoResponse {
+    TodoItem item = 1;
+}
+  
+service TodoService {
+    rpc CreateTodo(CreateTodoRequest) returns (CreateTodoResponse) {}
+}
