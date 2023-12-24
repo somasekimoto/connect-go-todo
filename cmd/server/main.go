@@ -32,11 +32,14 @@ func (s *TodoServer) CreateTodo(
 	return res, nil
 }
 
-func main() {
-	greeter := &TodoServer{}
+func server() http.Handler {
 	mux := http.NewServeMux()
-	path, handler := todov1connect.NewTodoServiceHandler(greeter)
-	mux.Handle(path, handler)
+	mux.Handle(todov1connect.NewTodoServiceHandler(&TodoServer{}))
+	return mux
+}
+
+func main() {
+	mux := server()
 	http.ListenAndServe(
 		"localhost:8080",
 		// Use h2c so we can serve HTTP/2 without TLS.
