@@ -9,7 +9,7 @@ message TodoItem {
     uint64 id = 1;
     string name = 2;
     google.protobuf.BoolValue completed = 3;
-  }
+}
   
 message TodoItems {
     repeated TodoItem item = 1;
@@ -22,7 +22,26 @@ message CreateTodoRequest {
 message CreateTodoResponse {
     TodoItem item = 1;
 }
+
+message UpdateTodoRequest {
+    string name = 1;
+    google.protobuf.BoolValue completed = 2;
+}
+
+message UpdateTodoResponse {
+    TodoItem item = 1;
+}
+
+message DeleteTodoRequest {
+    uint64 id = 1;
+}
+
+message DeleteTodoResponse {
+    uint64 id = 1;
+}
   
 service TodoService {
     rpc CreateTodo(CreateTodoRequest) returns (CreateTodoResponse) {}
+    rpc UpdateTodo(UpdateTodoRequest) returns (UpdateTodoResponse) {}
+    rpc DeleteTodo(DeleteTodoRequest) returns (DeleteTodoResponse) {}
 }
