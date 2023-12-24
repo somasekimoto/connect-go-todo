@@ -32,6 +32,34 @@ func (s *TodoServer) CreateTodo(
 	return res, nil
 }
 
+func (s *TodoServer) UpdateTodo(
+	ctx context.Context,
+	req *connect.Request[todov1.UpdateTodoRequest],
+) (*connect.Response[todov1.UpdateTodoResponse], error) {
+	log.Println("Request headers: ", req.Header())
+	res := connect.NewResponse(&todov1.UpdateTodoResponse{
+		Item: &todov1.TodoItem{
+			Id:        1,
+			Name:      req.Msg.Name,
+			Completed: &wrapperspb.BoolValue{Value: false},
+		},
+	})
+	res.Header().Set("Todo-Version", "v1")
+	return res, nil
+}
+
+func (s *TodoServer) DeleteTodo(
+	ctx context.Context,
+	req *connect.Request[todov1.DeleteTodoRequest],
+) (*connect.Response[todov1.DeleteTodoResponse], error) {
+	log.Println("Request headers: ", req.Header())
+	res := connect.NewResponse(&todov1.DeleteTodoResponse{
+		Id: req.Msg.Id,
+	})
+	res.Header().Set("Todo-Version", "v1")
+	return res, nil
+}
+
 func server() http.Handler {
 	mux := http.NewServeMux()
 	mux.Handle(todov1connect.NewTodoServiceHandler(&TodoServer{}))
