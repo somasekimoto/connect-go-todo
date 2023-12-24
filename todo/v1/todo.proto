@@ -3,11 +3,12 @@ syntax = "proto3";
 package todo.v1;
 
 option go_package = "github.com/somasekimoto/connect-go-todo/gen/todo/v1;todov1";
+import "google/protobuf/wrappers.proto";
 
 message TodoItem {
     uint64 id = 1;
     string name = 2;
-    bool completed = 3;
+    google.protobuf.BoolValue completed = 3;
   }
   
 message TodoItems {
